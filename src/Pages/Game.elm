@@ -1,7 +1,5 @@
-module Pages.Top exposing (Model, Msg, Params, page)
+module Pages.Game exposing (Params, Model, Msg, page)
 
-import Html exposing (..)
-import Html.Events exposing (onClick)
 import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
@@ -29,12 +27,12 @@ type alias Params =
 
 
 type alias Model =
-    { player : Maybe String }
+    {}
 
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( { player = shared.player }, Cmd.none )
+    ( {}, Cmd.none )
 
 
 
@@ -42,23 +40,19 @@ init shared { params } =
 
 
 type Msg
-    = Login String
-    | Practice
+    = ReplaceMe
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Login player ->
-            ( { model | player = Just player }, Cmd.none )
-
-        Practice ->
+        ReplaceMe ->
             ( model, Cmd.none )
 
 
 save : Model -> Shared.Model -> Shared.Model
 save model shared =
-    { shared | player = model.player }
+    shared
 
 
 load : Shared.Model -> Model -> ( Model, Cmd Msg )
@@ -77,13 +71,6 @@ subscriptions model =
 
 view : Model -> Document Msg
 view model =
-    { title = "Quarantine Dice"
-    , body =
-        [ div []
-            [ section []
-                [ button [ onClick Practice ] [ text "Just Me" ]
-                , button [ onClick (Login "guest") ] [ text "Fake Login" ]
-                ]
-            ]
-        ]
+    { title = "Game"
+    , body = []
     }

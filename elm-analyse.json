@@ -1,0 +1,12 @@
+{
+    "checks": {
+        "SingleFieldRecord": false,
+        "ExposeAll": true,
+        "ImportAll": false,
+        "UnusedTopLevel": true,
+        "UnusedImportAlias": true,
+        "UnusedImportedVariable": true,
+        "MultiLineRecordFormatting": false,
+        "DebugTodo": false
+    }
+}

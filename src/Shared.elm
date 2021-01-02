@@ -27,12 +27,13 @@ type alias Flags =
 type alias Model =
     { url : Url
     , key : Key
+    , player : Maybe String
     }
 
 
 init : Flags -> Url -> Key -> ( Model, Cmd Msg )
 init flags url key =
-    ( Model url key
+    ( Model url key Nothing
     , Cmd.none
     )
 
@@ -66,6 +67,17 @@ view :
     -> Model
     -> Document msg
 view { page, toMsg } model =
+    let
+        headline =
+            "Quarantine Dice"
+                ++ (case model.player of
+                        Just player ->
+                            " — " ++ player
+
+                        Nothing ->
+                            ""
+                   )
+    in
     { title = page.title
     , body =
         [ div [ class "layout" ]
@@ -73,6 +85,7 @@ view { page, toMsg } model =
                 [ a [ class "link", href (Route.toString Route.Top) ] [ text "Homepage" ]
                 , a [ class "link", href (Route.toString Route.NotFound) ] [ text "Not found" ]
                 ]
+            , header [] [ h1 [] [ text headline ] ]
             , div [ class "page" ] page.body
             ]
         ]
