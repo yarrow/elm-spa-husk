@@ -1,7 +1,8 @@
 module Pages.Top exposing (Model, Msg, Params, page)
 
 import Html exposing (..)
-import Html.Events exposing (onClick)
+import Html.Attributes exposing (..)
+import Html.Events exposing (onClick, onInput)
 import Shared
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
@@ -29,12 +30,16 @@ type alias Params =
 
 
 type alias Model =
-    { player : Maybe String }
+    { player : Maybe String
+    , newPlayer : String
+    }
 
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( { player = shared.player }, Cmd.none )
+    ( { player = shared.player, newPlayer = "" }
+    , Cmd.none
+    )
 
 
 
@@ -42,15 +47,19 @@ init shared { params } =
 
 
 type Msg
-    = Login String
+    = Login
+    | PlayerChanged String
     | Practice
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
     case msg of
-        Login player ->
-            ( { model | player = Just player }, Cmd.none )
+        PlayerChanged newPlayer ->
+            ( { model | newPlayer = newPlayer }, Cmd.none )
+
+        Login ->
+            ( { model | player = Just model.newPlayer }, Cmd.none )
 
         Practice ->
             ( model, Cmd.none )
@@ -63,7 +72,7 @@ save model shared =
 
 load : Shared.Model -> Model -> ( Model, Cmd Msg )
 load shared model =
-    ( model, Cmd.none )
+    ( { model | player = shared.player }, Cmd.none )
 
 
 subscriptions : Model -> Sub Msg
@@ -82,7 +91,13 @@ view model =
         [ div []
             [ section []
                 [ button [ onClick Practice ] [ text "Just Me" ]
-                , button [ onClick (Login "guest") ] [ text "Fake Login" ]
+                , input
+                    [ placeholder "Your name"
+                    , onInput PlayerChanged
+                    , value model.newPlayer
+                    ]
+                    []
+                , button [ onClick Login ] [ text "Login" ]
                 ]
             ]
         ]
