@@ -81,11 +81,7 @@ view { page, toMsg } model =
     { title = page.title
     , body =
         [ div [ class "layout" ]
-            [ header [ class "navbar" ]
-                [ a [ class "link", href (Route.toString Route.Top) ] [ text "Homepage" ]
-                , a [ class "link", href (Route.toString Route.NotFound) ] [ text "Not found" ]
-                ]
-            , header [] [ h1 [] [ text headline ] ]
+            [ header [] [ h1 [] [ text headline ] ]
             , div [ class "page" ] page.body
             ]
         ]

@@ -1,14 +1,17 @@
 module Pages.Top exposing (Model, Msg, Params, page)
 
+import Browser.Navigation exposing (Key)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onClick, onInput)
 import List
 import Shared
 import Spa.Document exposing (Document)
+import Spa.Generated.Route as Route
 import Spa.Page as Page exposing (Page)
 import Spa.Url as Url exposing (Url)
 import Tuple
+import Utils.Route
 import Validate exposing (Validator, validate)
 
 
@@ -34,6 +37,7 @@ type alias Params =
 
 type alias Model =
     { player : Maybe String
+    , key : Key
     , newPlayer : String
     , password : String
     , errors : List ErrorMessage
@@ -42,7 +46,12 @@ type alias Model =
 
 init : Shared.Model -> Url Params -> ( Model, Cmd Msg )
 init shared { params } =
-    ( { player = shared.player, newPlayer = "", password = "", errors = [] }
+    ( { player = shared.player
+      , key = shared.key
+      , newPlayer = ""
+      , password = ""
+      , errors = []
+      }
     , Cmd.none
     )
 
@@ -127,7 +136,7 @@ update msg model =
                     ( { model | errors = errors }, Cmd.none )
 
         Solitaire ->
-            ( model, Cmd.none )
+            ( model, Utils.Route.navigate model.key Route.Game )
 
 
 save : Model -> Shared.Model -> Shared.Model
