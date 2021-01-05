@@ -1,7 +1,7 @@
 {
-  "name": "our-elm-spa-app",
+  "name": "elm-spa-husk",
   "version": "1.0.0",
-  "description": "A project created with elm-spa",
+  "description": "Hopefully filled in for Quarantine Dice",
   "scripts": {
     "start": "npm install && npm run build:dev && npm run dev",
     "test": "elm-test",
