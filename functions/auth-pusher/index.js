@@ -2,11 +2,11 @@ exports.handler = async function (event, context) {
     console.log("EVENT: \n" + JSON.stringify(event, null, 2))
 
     const query = event.queryStringParameters
-    if (query.password !== process.env.PASSWORD) {
-        return { statusCode: 403, body: 'Forbidden' }
-    }
+//    if (query.password !== process.env.PASSWORD) {
+//        return { statusCode: 403, body: 'Forbidden' }
+//    }
 
-    const Pusher = require('pusher-js');
+    const Pusher = require('pusher');
     const pusher = new Pusher({
         appId: process.env.PUSHER_APP_ID,
         key: process.env.PUSHER_KEY,

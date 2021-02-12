@@ -13,6 +13,6 @@
   "author": "Yarrow Angelweed",
   "license": "BSD3",
   "dependencies": {
-    "pusher-js": "^7.0.3"
+    "pusher": "^4.0.2"
   }
 }
