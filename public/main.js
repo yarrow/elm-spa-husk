@@ -4,12 +4,17 @@ pusher = new Pusher("b470a1b48d9579a05f7f", {
 });
 pusher.connection.bind("error", function (err) {
   const e = err.error.data;
-  console.log("Error %d: %s", e.code, e.message);
+  toElm("error", e);
   //    console.log(err.error.data.code === 4004 ) {
 });
 pusher.connection.bind("state_change", function (states) {
-  console.log("%s -> %s", states.previous, states.current);
+  toElm("state_change", states);
 });
+
+function toElm(tag, obj) {
+  msg = `{"${tag}":${JSON.stringify(obj)}}`;
+  console.log(msg);
+}
 
 // Initial data passed to Elm (should match `Flags` defined in `Shared.elm`)
 // https://guide.elm-lang.org/interop/flags.html
