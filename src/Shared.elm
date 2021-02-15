@@ -11,6 +11,7 @@ module Shared exposing
 import Browser.Navigation exposing (Key)
 import Html exposing (..)
 import Html.Attributes exposing (class, href)
+import Pusher
 import Spa.Document exposing (Document)
 import Spa.Generated.Route as Route
 import Url exposing (Url)
@@ -31,10 +32,10 @@ type alias Model =
     }
 
 
-init : Flags -> Url -> Key -> ( Model, Cmd Msg )
+init : Flags -> Url -> Key -> ( Model, Cmd msg )
 init flags url key =
     ( Model url key Nothing
-    , Cmd.none
+    , Pusher.connect ()
     )
 
 
