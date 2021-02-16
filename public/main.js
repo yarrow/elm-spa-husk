@@ -14,8 +14,7 @@ app.ports.connect.subscribe(() => {
   });
   pusher.connection.bind("error", (err) => {
     const e = err.error.data;
-    toElm("error", e);
-    //    console.log(err.error.data.code === 4004 ) {
+    app.ports.connectionError.send(JSON.stringify(e, ["code", "message"]));
   });
   pusher.connection.bind("state_change", (states) => {
     toElm("state_change", states);

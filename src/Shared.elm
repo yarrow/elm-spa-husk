@@ -29,12 +29,13 @@ type alias Model =
     { url : Url
     , key : Key
     , player : Maybe String
+    , error : Maybe Pusher.ConnectionError
     }
 
 
 init : Flags -> Url -> Key -> ( Model, Cmd msg )
 init flags url key =
-    ( Model url key Nothing
+    ( Model url key Nothing Nothing
     , Pusher.connect ()
     )
 
@@ -44,7 +45,8 @@ init flags url key =
 
 
 type Msg
-    = ReplaceMe
+    = SaveError Pusher.ConnectionError
+    | ReplaceMe
 
 
 update : Msg -> Model -> ( Model, Cmd Msg )
@@ -53,10 +55,13 @@ update msg model =
         ReplaceMe ->
             ( model, Cmd.none )
 
+        SaveError error ->
+            ( { model | error = Just error }, Cmd.none )
+
 
 subscriptions : Model -> Sub Msg
 subscriptions model =
-    Sub.none
+    Pusher.gotError (\error -> SaveError error)
 
 
 
@@ -78,11 +83,20 @@ view { page, toMsg } model =
                         Nothing ->
                             ""
                    )
+
+        errorLine =
+            case model.error of
+                Nothing ->
+                    text ""
+
+                Just error ->
+                    p [ class "error" ] [ text error.message ]
     in
     { title = page.title
     , body =
         [ div [ class "layout" ]
             [ header [] [ h1 [] [ text headline ] ]
+            , errorLine
             , div [ class "page" ] page.body
             ]
         ]
