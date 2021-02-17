@@ -13,8 +13,15 @@ app.ports.connect.subscribe(() => {
     cluster: "us2",
   });
   pusher.connection.bind("error", (err) => {
-    const e = err.error.data;
-    app.ports.connectionError.send(JSON.stringify(e, ["code", "message"]));
+    const e = err?.error?.data;
+    // Ignore errors that don't have an error.data field. Maybe should pass on
+    // something like "Unknown error", but the case I know about is when
+    // internet connection is lost, and in that case Pusher's state_change
+    // captures the problem, changing from `connected` to `connecting` to
+    // `unavailable`. (It does the reverse when connection is restored.)
+    if (e) {
+      app.ports.connectionError.send(JSON.stringify(e));
+    }
   });
   pusher.connection.bind("state_change", (states) => {
     toElm("state_change", states);
