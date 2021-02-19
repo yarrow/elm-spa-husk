@@ -1,7 +1,7 @@
 {
-  "name": "elm-spa-husk",
+  "name": "pusher-netlify-elm-spa",
   "version": "1.0.0",
-  "description": "Hopefully filled in for Quarantine Dice",
+  "description": "Example Pusher app built with elm-spa, using Netlify functions for login",
   "scripts": {
     "start": "npm install && npm run build:dev && npm run dev",
     "test": "elm-test",

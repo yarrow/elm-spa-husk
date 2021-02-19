@@ -1,6 +1,6 @@
 module Pages.NotFound exposing (Model, Msg, Params, page)
 
-import Html exposing (..)
+import Html.Styled exposing (..)
 import Spa.Document exposing (Document)
 import Spa.Page as Page exposing (Page)
 import Spa.Url exposing (Url)

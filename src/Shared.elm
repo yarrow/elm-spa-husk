@@ -9,8 +9,9 @@ module Shared exposing
     )
 
 import Browser.Navigation exposing (Key)
-import Html exposing (..)
-import Html.Attributes exposing (class, href)
+import Css exposing (..)
+import Html.Styled exposing (..)
+import Html.Styled.Attributes exposing (css, href)
 import Pusher
 import Spa.Document exposing (Document)
 import Spa.Generated.Route as Route
@@ -90,14 +91,16 @@ view { page, toMsg } model =
                     text ""
 
                 Just error ->
-                    p [ class "error" ] [ text error.message ]
+                    p [ css [] ] [ text error.message ]
     in
     { title = page.title
     , body =
-        [ div [ class "layout" ]
-            [ header [] [ h1 [] [ text headline ] ]
-            , errorLine
-            , div [ class "page" ] page.body
+        [ div [ css [ margin (px 20), fontFamily sansSerif ] ]
+            [ header [ css [ displayFlex ] ]
+                [ a [ css [ color (rgb 0 100 200), textDecoration underline, marginRight (px 20) ] ] [ text headline ]
+                , errorLine
+                ]
+            , div [ css [ marginTop (px 20) ] ] page.body
             ]
         ]
     }

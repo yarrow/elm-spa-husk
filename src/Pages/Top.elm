@@ -1,9 +1,10 @@
 module Pages.Top exposing (Model, Msg, Params, page)
 
 import Browser.Navigation exposing (Key)
-import Html exposing (..)
-import Html.Attributes exposing (..)
-import Html.Events exposing (onClick, onInput)
+import Css exposing (..)
+import Html.Styled exposing (..)
+import Html.Styled.Attributes exposing (..)
+import Html.Styled.Events exposing (onClick, onInput)
 import List
 import Shared
 import Spa.Document exposing (Document)

@@ -5,7 +5,7 @@ module Spa.Document exposing
     )
 
 import Browser
-import Html exposing (Html)
+import Html.Styled as Html exposing (Html)
 
 
 type alias Document msg =
@@ -24,5 +24,5 @@ map fn doc =
 toBrowserDocument : Document msg -> Browser.Document msg
 toBrowserDocument doc =
     { title = doc.title
-    , body = doc.body
+    , body = List.map Html.toUnstyled doc.body
     }
