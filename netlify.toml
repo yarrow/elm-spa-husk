@@ -1,2 +1,8 @@
 [build]
+    publish = "public"
     functions = "functions"
+
+[dev]
+    command = "npm run dev"
+    targetPort = 8000
+    framework = "#custom"
